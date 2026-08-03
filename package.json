@@ -1,0 +1,12 @@
+{
+  "name": "my-photography-portfolio",
+  "version": "1.0.0",
+  "description": "A modern photography portfolio and admin panel connected to Supabase Cloud Database.",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": ["photography", "portfolio", "supabase", "vercel"],
+  "author": "Aperture Vision",
+  "license": "MIT"
+}

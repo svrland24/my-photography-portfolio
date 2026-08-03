@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aperture Vision | Photography Portfolio & Showcase</title>
+    <meta name="description" content="A premium photography portfolio showcase featuring nature, portraits, landscapes, and street photography connected to Supabase Cloud Database.">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <!-- Sticky Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo">
+                <i class="fa-solid fa-camera-retro"></i>
+                <div class="brand-text">Aperture<span>Vision</span></div>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#gallery" class="active">Gallery</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button id="themeToggle" class="btn-icon" title="Toggle Light/Dark Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button id="openAdminBtn" class="btn-admin">
+                    <i class="fa-solid fa-lock"></i> Admin Panel
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-banner">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop" alt="Featured Photograph" class="hero-bg" id="heroBgImg">
+            <div class="hero-content">
+                <span class="hero-badge"><i class="fa-solid fa-star"></i> Featured Photograph</span>
+                <h1 class="hero-title" id="heroTitle">Golden Hour Mountain Peak</h1>
+                <p class="hero-desc" id="heroDesc">A breathtaking view of sunrise over misty mountain ridges.</p>
+                
+                <div class="hero-meta" id="heroMeta">
+                    <span class="meta-item"><i class="fa-solid fa-camera"></i> Sony A7 IV</span>
+                    <span class="meta-item"><i class="fa-solid fa-circle-dot"></i> FE 16-35mm f/2.8 GM</span>
+                    <span class="meta-item"><i class="fa-solid fa-sliders"></i> ISO 100</span>
+                    <span class="meta-item"><i class="fa-solid fa-clock"></i> 1/500s</span>
+                    <span class="meta-item"><i class="fa-solid fa-location-dot"></i> Bandarban, Bangladesh</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Controls (Search & Category Pills) -->
+    <div class="gallery-controls" id="gallery">
+        <div class="controls-row">
+            <div class="category-pills" id="categoryPills">
+                <!-- Rendered dynamically by JavaScript -->
+            </div>
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Search photos by title, gear, location...">
+            </div>
+        </div>
+    </div>
+
+    <!-- Photo Gallery Grid -->
+    <section class="gallery-section">
+        <div class="photo-grid" id="photoGrid">
+            <!-- Rendered dynamically by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div class="modal-overlay" id="lightboxModal">
+        <div class="lightbox-content">
+            <button class="close-btn" id="closeModal" title="Close"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div class="lightbox-media">
+                <img id="modalImage" src="" alt="Full view">
+            </div>
+            
+            <div class="lightbox-details">
+                <span class="category-tag" id="modalCategory" style="align-self: flex-start; margin-bottom: 0.8rem;">Category</span>
+                <h2 id="modalTitle" style="font-family: var(--font-heading); font-size: 2rem; margin-bottom: 0.5rem;">Photo Title</h2>
+                <p id="modalDesc" style="color: var(--text-muted); font-size: 0.95rem;">Description goes here...</p>
+
+                <div class="exif-grid">
+                    <div class="exif-box">
+                        <i class="fa-solid fa-camera"></i>
+                        <div class="exif-info">
+                            <label>Camera</label>
+                            <span id="modalCamera">N/A</span>
+                        </div>
+                    </div>
+                    <div class="exif-box">
+                        <i class="fa-solid fa-circle-dot"></i>
+                        <div class="exif-info">
+                            <label>Lens</label>
+                            <span id="modalLens">N/A</span>
+                        </div>
+                    </div>
+                    <div class="exif-box">
+                        <i class="fa-solid fa-sliders"></i>
+                        <div class="exif-info">
+                            <label>ISO</label>
+                            <span id="modalIso">N/A</span>
+                        </div>
+                    </div>
+                    <div class="exif-box">
+                        <i class="fa-solid fa-stopwatch"></i>
+                        <div class="exif-info">
+                            <label>Shutter Speed</label>
+                            <span id="modalShutter">N/A</span>
+                        </div>
+                    </div>
+                    <div class="exif-box">
+                        <i class="fa-solid fa-eye"></i>
+                        <div class="exif-info">
+                            <label>Aperture</label>
+                            <span id="modalAperture">N/A</span>
+                        </div>
+                    </div>
+                    <div class="exif-box">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <div class="exif-info">
+                            <label>Location</label>
+                            <span id="modalLocation">N/A</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: auto; padding-top: 1rem; display: flex; gap: 1rem;">
+                    <a id="downloadBtn" href="#" target="_blank" download class="btn-admin" style="justify-content: center; width: 100%;">
+                        <i class="fa-solid fa-download"></i> Open / Download Full Resolution
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="lightbox-content" style="max-width: 950px; height: 85vh; flex-direction: column; background: var(--bg-card); overflow: hidden;">
+            <button class="close-btn" id="closeAdminBtn" title="Close"><i class="fa-solid fa-xmark"></i></button>
+
+            <!-- Admin Passcode Screen -->
+            <div id="adminLoginScreen" style="padding: 4rem 2rem; text-align: center; max-width: 420px; margin: 0 auto; width: 100%;">
+                <i class="fa-solid fa-shield-halved fa-3x" style="color: var(--accent-glow); margin-bottom: 1rem;"></i>
+                <h2 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 0.5rem;">Admin Access</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Enter your passcode to manage photographs and categories.</p>
+
+                <div id="loginError" style="display: none; padding: 0.6rem; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; border-radius: 8px; color: #f87171; font-size: 0.85rem; margin-bottom: 1rem;"></div>
+
+                <div class="form-group">
+                    <input type="password" id="adminPinInput" class="form-control" placeholder="Enter PIN (Default: admin123)" style="text-align: center; font-size: 1.1rem; letter-spacing: 2px;">
+                </div>
+
+                <button id="adminLoginBtn" class="btn-submit" style="width: 100%; margin-top: 0.5rem;">
+                    <i class="fa-solid fa-key"></i> Verify & Unlock
+                </button>
+            </div>
+
+            <!-- Admin Dashboard Screen -->
+            <div id="adminDashboardScreen" style="display: none; height: 100%; display: flex; flex-direction: column;">
+                
+                <!-- Admin Top Bar -->
+                <div style="padding: 1.2rem 2rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <i class="fa-solid fa-camera-retro" style="font-size: 1.4rem; color: var(--accent-glow);"></i>
+                        <h3 style="font-size: 1.2rem; font-weight: 700;">Admin Management Portal</h3>
+                    </div>
+
+                    <!-- Navigation Tabs -->
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="pill-btn admin-tab-btn active" data-tab="tabUpload"><i class="fa-solid fa-plus"></i> Upload Photo</button>
+                        <button class="pill-btn admin-tab-btn" data-tab="tabPhotos"><i class="fa-solid fa-images"></i> Manage Photos</button>
+                        <button class="pill-btn admin-tab-btn" data-tab="tabCategories"><i class="fa-solid fa-folder"></i> Categories</button>
+                    </div>
+                </div>
+
+                <!-- Admin Stats Row -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; padding: 1.2rem 2rem; background: rgba(0,0,0,0.2); border-bottom: 1px solid var(--border-color);">
+                    <div>
+                        <span style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Total Photos</span>
+                        <h3 id="statTotalPhotos" style="font-size: 1.4rem; font-weight: 700; color: var(--accent-glow);">0</h3>
+                    </div>
+                    <div>
+                        <span style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Categories</span>
+                        <h3 id="statTotalCategories" style="font-size: 1.4rem; font-weight: 700; color: var(--accent-secondary);">0</h3>
+                    </div>
+                    <div>
+                        <span style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Total Views</span>
+                        <h3 id="statTotalViews" style="font-size: 1.4rem; font-weight: 700; color: #10b981;">0</h3>
+                    </div>
+                </div>
+
+                <!-- Admin Tab Contents -->
+                <div style="padding: 2rem; overflow-y: auto; flex: 1;">
+
+                    <!-- Upload Tab -->
+                    <div id="tabUpload" class="admin-tab-content">
+                        <div id="uploadAlert" style="display: none; padding: 0.8rem 1.2rem; background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; border-radius: 8px; color: #34d399; margin-bottom: 1.5rem;">
+                            <i class="fa-solid fa-circle-check"></i> Photograph uploaded successfully to Supabase Database!
+                        </div>
+
+                        <form id="photoUploadForm">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;">
+                                <div class="form-group">
+                                    <label><i class="fa-solid fa-heading"></i> Photo Title *</label>
+                                    <input type="text" id="uploadTitle" required class="form-control" placeholder="e.g. Sunset Over Ratargul">
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fa-solid fa-folder"></i> Category *</label>
+                                    <select id="uploadCategorySelect" class="form-control">
+                                        <option value="">-- Select Category --</option>
+                                    </select>
+                                    <input type="text" id="uploadNewCategoryInput" class="form-control" style="margin-top: 0.5rem;" placeholder="Or type a new category name...">
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;">
+                                <div class="form-group">
+                                    <label><i class="fa-solid fa-file-image"></i> Select Image File (Upload from PC)</label>
+                                    <input type="file" id="photoFileInput" accept="image/*" class="form-control" style="padding: 0.5rem;">
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fa-solid fa-link"></i> Or Image URL (Direct Link)</label>
+                                    <input type="url" id="uploadUrlInput" class="form-control" placeholder="https://images.unsplash.com/photo-example...">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label><i class="fa-solid fa-paragraph"></i> Description</label>
+                                <textarea id="uploadDescription" rows="2" class="form-control" placeholder="Write a short backstory or camera details..."></textarea>
+                            </div>
+
+                            <h4 style="font-size: 1rem; font-weight: 700; color: var(--accent-glow); margin: 1.2rem 0 0.8rem 0;"><i class="fa-solid fa-sliders"></i> Camera EXIF Metadata</h4>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem;">
+                                <div class="form-group"><label>Camera Model</label><input type="text" id="uploadCamera" class="form-control" value="Sony A7 IV"></div>
+                                <div class="form-group"><label>Lens Used</label><input type="text" id="uploadLens" class="form-control" value="FE 24-70mm f/2.8 GM"></div>
+                                <div class="form-group"><label>ISO</label><input type="text" id="uploadIso" class="form-control" value="100"></div>
+                                <div class="form-group"><label>Shutter Speed</label><input type="text" id="uploadShutter" class="form-control" value="1/250s"></div>
+                                <div class="form-group"><label>Aperture</label><input type="text" id="uploadAperture" class="form-control" value="f/2.8"></div>
+                                <div class="form-group"><label>Location</label><input type="text" id="uploadLocation" class="form-control" value="Sylhet, Bangladesh"></div>
+                            </div>
+
+                            <div class="form-group" style="display: flex; align-items: center; gap: 0.6rem; margin-top: 0.5rem;">
+                                <input type="checkbox" id="uploadFeaturedCheck" style="width: 18px; height: 18px; cursor: pointer;">
+                                <label for="uploadFeaturedCheck" style="margin-bottom: 0; cursor: pointer;"><i class="fa-solid fa-star" style="color: #f59e0b;"></i> Mark as Featured Showcase</label>
+                            </div>
+
+                            <button type="submit" class="btn-submit" style="width: 100%; margin-top: 1rem;">
+                                <i class="fa-solid fa-cloud-arrow-up"></i> Upload Photograph Now
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Manage Photos Tab -->
+                    <div id="tabPhotos" class="admin-tab-content" style="display: none;">
+                        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid var(--border-color); color: var(--text-muted);">
+                                    <th style="padding: 0.6rem 1rem;">Image</th>
+                                    <th style="padding: 0.6rem 1rem;">Title</th>
+                                    <th style="padding: 0.6rem 1rem;">Category</th>
+                                    <th style="padding: 0.6rem 1rem;">Camera</th>
+                                    <th style="padding: 0.6rem 1rem;">Featured</th>
+                                    <th style="padding: 0.6rem 1rem;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminPhotosTableBody">
+                                <!-- Rendered dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Categories Tab -->
+                    <div id="tabCategories" class="admin-tab-content" style="display: none;">
+                        <form id="addCategoryForm" style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                            <input type="text" id="newCategoryNameInput" required class="form-control" placeholder="New Category Name (e.g., Wedding, Travel)">
+                            <button type="submit" class="btn-submit" style="width: 200px; flex-shrink: 0;"><i class="fa-solid fa-plus"></i> Add Category</button>
+                        </form>
+
+                        <div id="categoryManagerList">
+                            <!-- Rendered dynamically -->
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="about-card">
+            <img src="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?q=80&w=800" alt="Photographer at Work" class="about-img">
+            <div class="about-text">
+                <span class="hero-badge"><i class="fa-solid fa-user"></i> About The Photographer</span>
+                <h2>Visual Storyteller & Lens Explorer</h2>
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">Passionately capturing raw emotions, majestic landscapes, and vibrant city streetscapes. Every photo in this collection tells a story carved by lighting, geometry, and moment.</p>
+                <p style="color: var(--text-muted);">Equipped with professional mirrorless systems and prime lenses to craft high-resolution visual art for exhibitions, editorial features, and private collections.</p>
+                
+                <div class="stats-grid">
+                    <div>
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Clicks Captured</div>
+                    </div>
+                    <div>
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Exhibitions</div>
+                    </div>
+                    <div>
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Original Art</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="about-section" id="contact" style="margin-top: 0;">
+        <div class="about-card" style="grid-template-columns: 1fr;">
+            <div style="max-width: 700px; margin: 0 auto; text-align: center; width: 100%;">
+                <span class="hero-badge"><i class="fa-solid fa-envelope"></i> Get In Touch</span>
+                <h2 style="font-family: var(--font-heading); font-size: 2.2rem; margin-bottom: 0.8rem;">Have a Project or Inquiry?</h2>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">Feel free to reach out for photo print inquiries, booking assignments, or creative collaborations.</p>
+
+                <form onsubmit="event.preventDefault(); alert('Thank you! Your message has been sent.'); this.reset();" style="display: flex; flex-direction: column; gap: 1rem; text-align: left;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group" style="margin: 0;">
+                            <label>Your Name</label>
+                            <input type="text" required class="form-control" placeholder="John Doe">
+                        </div>
+                        <div class="form-group" style="margin: 0;">
+                            <label>Your Email</label>
+                            <input type="email" required class="form-control" placeholder="john@example.com">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin: 0;">
+                        <label>Subject</label>
+                        <input type="text" class="form-control" placeholder="Photo Print / Assignment Booking">
+                    </div>
+                    <div class="form-group" style="margin: 0;">
+                        <label>Message</label>
+                        <textarea rows="4" required class="form-control" placeholder="Write your message..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit" style="align-self: center; width: 220px; margin-top: 0.5rem;">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="nav-container" style="flex-direction: column; gap: 1rem;">
+            <p>&copy; 2026 ApertureVision Photography. All rights reserved.</p>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Crafted for photographers & connected to Supabase Cloud Database.</p>
+        </div>
+    </footer>
+
+    <!-- App JavaScript Scripts -->
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/supabase.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/admin.js"></script>
+</body>
+</html>

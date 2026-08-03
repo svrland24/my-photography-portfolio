@@ -1,94 +1,65 @@
 # 📸 Aperture Vision - Photography Portfolio & Admin Panel
 
-একটি আধুনিক, আকর্ষণীয় এবং রেসপন্সিভ **ফটোগ্রাফি পোর্টফোলিও ওয়েবসাইট** এবং **অ্যাডমিন প্যানেল**। এখানে ফটোগ্রাফাররা নিজেদের তোলা ছবি ক্যাটাগরি-ওয়াইজ (Nature, Portrait, Street, Landscape ইত্যাদি) ওয়েবসাইট থেকে সরাসরি আপলোড এবং সেগুলোর ক্যামেরা মেটাডাটা (EXIF data - ISO, Shutter speed, Lens, Location) প্রদর্শন করতে পারবেন।
+একটি আধুনিক, দৃষ্টিশক্তি কাড়ার মতো সুন্দর এবং রেসপন্সিভ **ফটোগ্রাফি পোর্টফোলিও ওয়েবসাইট** ও **সিকিউর অ্যাডমিন প্যানেল**। এটি সরাসরি **Supabase Cloud Database**-এর সাথে যুক্ত এবং **Vercel / GitHub**-এ ১০০% শূন্য-এরর (Zero Deployment Error) সহ ১-ক্লিকে লাইভ হোস্ট করার জন্য তৈরি।
 
-> **Tech Stack:** PHP 8.x | PostgreSQL (Supabase) / MySQL (XAMPP) | HTML5 | CSS3 (Glassmorphic Dark Mode) | Vanilla JavaScript
+> **Tech Stack:** HTML5 | Modern CSS3 (Glassmorphism & Dark Mode) | ES6+ JavaScript | Supabase Cloud Client | Vercel Native
 
 ---
 
-## ⚡ Supabase কানেক্ট করার ৪টি সহজ ধাপ (Supabase Setup Guide)
+## ⚡ প্রধান ফিচারসমূহ (Key Features)
 
-আপনি যদি **Supabase (Cloud Database)** ব্যবহার করতে চান, তবে নিচের সহজ ধাপগুলো অনুসরণ করুন:
+1. **🎨 পাবলিক পোর্টফোলিও ওয়েবসাইট (`index.html`)**:
+   - **Hero Showcase**: ফিচারড ছবি ও তার ক্যামেরা মেটাডাটা (ISO, Shutter speed, Lens, Aperture, Location)।
+   - **Category Filters**: ক্লিকে ক্যাটাগরি অনুযায়ী ছবি ফিল্টারিং (Nature, Portrait, Street, Landscape, Architecture, Wildlife)।
+   - **Live Search Bar**: ছবি, লোকেশন বা ক্যামেরা মডেল অনুযায়ী ইনস্ট্যান্ট সার্চ।
+   - **EXIF Lightbox Modal**: ক্লিকে বড় সাইজে ছবি দেখার পাশাপাশি সম্পূর্ণ **EXIF Camera Specs**।
+   - **Dark / Light Mode**: সুইচ করার সুবিধা।
 
-### 1. Supabase-এ টেবিল তৈরি করা (SQL Editor)
-1. **[Supabase Dashboard](https://supabase.com/dashboard)**-এ যান এবং আপনার প্রজেক্টটি সিলেক্ট করুন।
-2. বামপাশের মেনু থেকে **`SQL Editor`** (`>_` আইকন) তে ক্লিক করুন।
-3. **`New query`** বাটনে ক্লিক করুন।
-4. আপনার প্রজেক্টের **`sql/supabase_schema.sql`** ফাইলের সম্পূর্ণ কোড কপি করে পেস্ট করুন এবং ডানপাশে **`Run`** বাটনে ক্লিক করুন। 
-   *(এর ফলে `categories`, `photos`, `admins`, `messages` টেবিলগুলো এবং প্রাথমিক ছবি ও স্যাম্পল ডাটা সেভ হয়ে যাবে)*।
+2. **🔐 অ্যাডমিন প্যানেল (Admin Portal Modal)**:
+   - **Passcode Protected**: ডিফল্ট PIN: **`admin123`**
+   - **Photo Uploader**: পিসি থেকে সরাসরি ছবি ফাইল সিলেক্ট করে বা লিঙ্ক দিয়ে ক্যাটাগরি ও ক্যামেরা EXIF মেটাডাটা সহ ছবি আপলোড করা।
+   - **Category Manager**: ইচ্ছামতো নতুন ক্যাটাগরি যোগ বা মুছে ফেলার সুযোগ।
+   - **Photo Manager**: সকল ছবির তালিকা, Featured টগল এবং রিমুভ করার সুবিধা।
 
-### 2. ডাটাবেজ তথ্য (Connection Details) সংগ্রহ করা
-1. Supabase-এর বামপাশের নিচে থাকা **`Project Settings`** (⚙️ আইকন) এ যান।
-2. **`Database`** ট্যাবে ক্লিক করুন।
-3. স্ক্রল করে **Connection Parameters** দেখতে পাবেন:
-   - **Host:** e.g., `db.xxxxxxxxxxxx.supabase.co`
-   - **Port:** `5432`
-   - **Database:** `postgres`
-   - **User:** `postgres`
-   - **Password:** (প্রজেক্ট তৈরির সময় আপনি যে পাসওয়ার্ড দিয়েছিলেন)
+---
 
-### 3. প্রজেক্টের `includes/config.php` ফাইল আপডেট করা
-আপনার প্রজেক্টের **`includes/config.php`** ফাইলটি ওপেন করুন এবং ৩-৭ নম্বর লাইনে আপনার মানগুলো বসিয়ে দিন:
+## 🚀 GitHub & Vercel-এ ১-ক্লিকে লাইভ করার নিয়ম
 
-```php
-$db_mode = 'supabase'; // 'supabase' সিলেক্ট রাখুন
-
-$supabase_host     = 'db.xxxxxxxxxxxx.supabase.co'; // আপনার Host নাম
-$supabase_port     = '5432';
-$supabase_db       = 'postgres';
-$supabase_user     = 'postgres';
-$supabase_password = 'YOUR_SUPABASE_PASSWORD';    // আপনার পাসওয়ার্ড
+### ধাপ ১: GitHub-এ ফাইলগুলো পুশ করুন
+CMD অপেন করে ১ লাইনের এই কমান্ডটি দিন:
+```cmd
+git add . && git commit -m "Initial commit of new Vercel-native portfolio" && git branch -M main && git push origin main
 ```
 
-> **নোট:** আপনার XAMPP-এর PHP-তে PostgreSQL সাপোর্ট (`pdo_pgsql`) অলরেডি অটোমেটিক চালু করে দেওয়া হয়েছে!
+### ধাপ ২: Vercel-এ ডিপ্লয় করুন
+1. **[Vercel.com](https://vercel.com)**-এ লগইন করুন।
+2. **`Add New Project`** &rarr; আপনার GitHub repository **`my-photography-portfolio`** সিলেক্ট করে **`Deploy`** বাটনে ক্লিক করুন!
+3. ৩ সেকেন্ডের মধ্যে Vercel আপনাকে ফ্রিতে লাইভ ডোমেইন লিঙ্ক দিয়ে দিবে (যেমন `https://my-photography-portfolio.vercel.app`)!
 
 ---
 
-## 💻 XAMPP MySQL বিকল্প গাইড (Local Machine Fallback)
-
-যদি কখনও অফলাইনে কাজ করতে চান, তবে `includes/config.php` ফাইলে `$db_mode = 'mysql';` লিখে লোকাল XAMPP চালু করে কাজ করতে পারবেন।
-
-### XAMPP লোকাল রান করতে:
-1. XAMPP Control Panel-এ **Apache** এবং **MySQL** চালু করুন।
-2. `http://localhost/phpmyadmin` এ গিয়ে `photography_db` ডাটাবেজে `sql/database.sql` ফাইল ইম্পোর্ট করুন।
-
----
-
-## 🌐 ওয়েবসাইট ও অ্যাডমিন প্যানেল ব্যবহার
-
-### 1. পাবলিক ওয়েবসাইট (Public Gallery)
-👉 **`http://localhost/photograpy-project/`**
-
-### 2. অ্যাডমিন প্যানেল (Admin Panel)
-👉 **`http://localhost/photograpy-project/admin/login.php`**
-
-- **Default Username:** `admin`
-- **Default Password:** `admin123`
-
----
-
-## 📂 ফাইল স্ট্রাকচার
+## 📂 ফাইল স্ট্রাকচার (Project Structure)
 
 ```text
 photograpy-project/
-├── index.php                # গ্যালারি ও পোর্টফোলিও ওয়েবসাইট
-├── README.md                # সম্পূর্ণ প্রজেক্ট গাইড
+├── index.html               # মূল পোর্টফোলিও ওয়েবসাইট ও অ্যাডমিন পোর্টাল
+├── README.md                # সম্পূর্ণ প্রজেক্ট ও ডিপ্লয়মেন্ট গাইড
+├── vercel.json              # Vercel-এর জন্য স্ট্যাটিক রুট কনফিগারেশন
+├── package.json             # মেটাডাটা
 ├── sql/
-│   ├── supabase_schema.sql  # Supabase (PostgreSQL)-এর জন্য SQL ফাইল
-│   └── database.sql         # XAMPP MySQL-এর জন্য SQL ফাইল
-├── includes/
-│   ├── config.php           # Supabase & MySQL সংযোগ কনফিগারেশন
-│   ├── header.php           # ওয়েবসাইটের নেভিগেশন
-│   └── footer.php           # ফুটার ও স্ক্রিপ্ট লিংক
-├── admin/
-│   ├── login.php            # অ্যাডমিন লগইন পেজ
-│   ├── index.php            # অ্যাডমিন ড্যাশবোর্ড
-│   ├── upload.php           # ফটো ও মেটাডাটা আপলোড পেজ
-│   ├── categories.php       # ক্যাটাগরি ব্যবস্থাপনা
-│   ├── photos.php           # ফটো এডিটর ও ফিচারড টগল
-│   └── logout.php           # লগআউট
-├── assets/
-│   ├── css/style.css        # গ্লাসমরফিজম ডার্ক থিম ও এনিমেশন
-│   └── js/main.js           # স্পিনার, ফিল্টার ও লাইটবক্স লজিক
-└── uploads/                 # ফটো আপলোড ফোল্ডার
+│   └── supabase_schema.sql  # Supabase (PostgreSQL) ডাটাবেজ টেবিল
+└── assets/
+    ├── css/
+    │   └── style.css        # ডার্ক গ্লাসমরফিজম স্টাইলিং ও এনিমেশন
+    └── js/
+        ├── config.js        # Supabase ক্রেডেনশিয়াল ও কনফিগারেশন
+        ├── supabase.js      # Supabase ডাটা সার্ভিস ক্লায়েন্ট
+        ├── main.js          # গ্যালারি ফিল্টারিং, সার্চ ও লাইটবক্স
+        └── admin.js         # অ্যাডমিন লগইন, আপলোডার ও ক্যাটাগরি ম্যানেজার
 ```
+
+---
+
+## 🇬🇧 English Summary
+
+**Aperture Vision** is an ultra-modern, visual-first Photography Portfolio & Admin Panel connected to Supabase Cloud Database. It features EXIF camera metadata display, dynamic category filtering, instant search, glassmorphic lightbox, and dark/light UI modes. Designed natively for zero-configuration 1-click deployments on Vercel.

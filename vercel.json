@@ -1,29 +1,5 @@
 {
-  "functions": {
-    "api/*.php": {
-      "runtime": "vercel-php"
-    }
-  },
-  "routes": [
-    {
-      "src": "/assets/(.*)",
-      "dest": "/assets/$1"
-    },
-    {
-      "src": "/uploads/(.*)",
-      "dest": "/uploads/$1"
-    },
-    {
-      "src": "/admin/(.*)",
-      "dest": "/api/index.php"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.php"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/api/index.php"
-    }
-  ]
+  "version": 2,
+  "cleanUrls": true,
+  "trailingSlash": false
 }
