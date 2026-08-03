@@ -4,18 +4,26 @@
       "runtime": "vercel-php"
     }
   },
-  "rewrites": [
+  "routes": [
     {
-      "source": "/assets/(.*)",
-      "destination": "/assets/$1"
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
     },
     {
-      "source": "/uploads/(.*)",
-      "destination": "/uploads/$1"
+      "src": "/uploads/(.*)",
+      "dest": "/uploads/$1"
     },
     {
-      "source": "/(.*)",
-      "destination": "/api/index.php"
+      "src": "/admin/(.*)",
+      "dest": "/api/index.php"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.php"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.php"
     }
   ]
 }
