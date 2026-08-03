@@ -1,22 +1,21 @@
 {
-  "builds": [
-    {
-      "src": "api/index.php",
-      "use": "vercel-php"
+  "functions": {
+    "api/*.php": {
+      "runtime": "vercel-php"
     }
-  ],
-  "routes": [
+  },
+  "rewrites": [
     {
-      "src": "/assets/(.*)",
-      "dest": "/assets/$1"
+      "source": "/assets/(.*)",
+      "destination": "/assets/$1"
     },
     {
-      "src": "/uploads/(.*)",
-      "dest": "/uploads/$1"
+      "source": "/uploads/(.*)",
+      "destination": "/uploads/$1"
     },
     {
-      "src": "/(.*)",
-      "dest": "/api/index.php"
+      "source": "/(.*)",
+      "destination": "/api/index.php"
     }
   ]
 }
