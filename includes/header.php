@@ -10,7 +10,8 @@ require_once __DIR__ . '/config.php';
     <meta name="description" content="A premium photography portfolio showcase featuring nature, portraits, landscapes, and street photography.">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Main Custom CSS (Root Relative Path for Vercel & Localhost) -->
+    <!-- Main Custom CSS (Vercel Guaranteed Endpoint & Static Fallback) -->
+    <link rel="stylesheet" href="/api/css.php">
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
