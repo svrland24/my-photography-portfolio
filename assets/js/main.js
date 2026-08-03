@@ -1,6 +1,6 @@
 /* ========================================================
-   Photography Portfolio - Main Gallery Logic
-   Category Pills, Live Search, Lightbox EXIF & Theme Toggle
+   Aperture Vision - Pexels-Inspired Gallery Logic
+   Masonry Photo Cards, Floating Search, Lightbox EXIF & Download
    ======================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const categoryContainer = document.getElementById('categoryPills');
     const photoGrid = document.getElementById('photoGrid');
-    const searchInput = document.getElementById('searchInput');
+    const heroSearchInput = document.getElementById('heroSearchInput');
+    const trendingTagBtns = document.querySelectorAll('.trending-tag-btn');
 
     // Render Categories
     async function loadCategories() {
@@ -69,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Render Photos with Pulse Spinner & Shimmer Cards
+    // Render Pexels Masonry Grid
     async function loadPhotos() {
         if (!photoGrid) return;
 
@@ -77,17 +78,11 @@ document.addEventListener('DOMContentLoaded', () => {
         let skeletonHtml = `
             <div class="spinner-container" style="grid-column: 1/-1;">
                 <i class="fa-solid fa-camera-retro spin-camera"></i>
-                <p style="font-size: 0.95rem; font-weight: 600; color: var(--text-main); margin-top: -0.5rem;">Loading Photographs...</p>
+                <p style="font-size: 0.95rem; font-weight: 600; color: var(--text-main); margin-top: -0.5rem;">Exploring Photographs...</p>
             </div>
         `;
         for (let i = 0; i < 6; i++) {
-            skeletonHtml += `
-                <div class="skeleton-card">
-                    <div class="skeleton-img"></div>
-                    <div class="skeleton-text"></div>
-                    <div class="skeleton-text short"></div>
-                </div>
-            `;
+            skeletonHtml += `<div class="skeleton-card"><div class="skeleton-img"></div></div>`;
         }
         photoGrid.innerHTML = skeletonHtml;
 
@@ -109,18 +104,28 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             photoGrid.innerHTML = photos.map((photo, idx) => `
-                <div class="photo-card fade-in-up" style="animation-delay: ${idx * 0.05}s;" data-photo='${JSON.stringify(photo).replace(/'/g, "&apos;")}'>
-                    <div class="card-img-wrapper">
-                        <img src="${photo.image_path}" alt="${escapeHtml(photo.title)}" loading="lazy">
-                        <span class="category-tag">${photo.category_name || 'Gallery'}</span>
-                        ${photo.is_featured ? '<span class="featured-badge" title="Featured Showcase"><i class="fa-solid fa-star"></i></span>' : ''}
-                    </div>
-                    <div class="card-info">
-                        <h3 class="card-title">${escapeHtml(photo.title)}</h3>
-                        <p class="card-desc">${photo.description ? escapeHtml(photo.description) : 'No description provided.'}</p>
-                        <div class="card-footer">
-                            <span class="location-tag"><i class="fa-solid fa-location-dot"></i> ${photo.location || 'Location Unspecified'}</span>
-                            <span><i class="fa-solid fa-eye"></i> ${photo.views_count || 0}</span>
+                <div class="photo-card fade-in-up" style="animation-delay: ${idx * 0.04}s;" data-photo='${JSON.stringify(photo).replace(/'/g, "&apos;")}'>
+                    <img src="${photo.image_path}" alt="${escapeHtml(photo.title)}" loading="lazy">
+                    
+                    <!-- Pexels Hover Overlay -->
+                    <div class="card-overlay">
+                        <div class="overlay-top">
+                            <span class="pill-btn" style="padding: 0.3rem 0.8rem; font-size: 0.75rem; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); border-color: rgba(255,255,255,0.2); color: #fff;">
+                                ${photo.category_name || 'Gallery'}
+                            </span>
+                            <button class="btn-icon like-btn" style="width: 34px; height: 34px; background: rgba(0,0,0,0.6); color: #fff;" title="Like Photograph">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                        </div>
+
+                        <div class="overlay-bottom">
+                            <div class="creator-info">
+                                <div class="creator-avatar"><i class="fa-solid fa-user"></i></div>
+                                <span>${escapeHtml(photo.title)}</span>
+                            </div>
+                            <a href="${photo.image_path}" download target="_blank" onclick="event.stopPropagation();" class="btn-overlay-action">
+                                <i class="fa-solid fa-download"></i> Download
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -133,15 +138,30 @@ document.addEventListener('DOMContentLoaded', () => {
                     openLightbox(photoData);
                 });
             });
+
+            // Heart Like Toggle
+            photoGrid.querySelectorAll('.like-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const icon = btn.querySelector('i');
+                    if (icon.classList.contains('fa-regular')) {
+                        icon.className = 'fa-solid fa-heart';
+                        btn.style.color = '#ef4444';
+                    } else {
+                        icon.className = 'fa-regular fa-heart';
+                        btn.style.color = '#fff';
+                    }
+                });
+            });
         } catch (err) {
             console.error('Error rendering photos:', err);
         }
     }
 
-    // Debounced Search Input
+    // Debounced Hero Search Input
     let searchTimeout;
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
+    if (heroSearchInput) {
+        heroSearchInput.addEventListener('input', (e) => {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(() => {
                 searchQuery = e.target.value;
@@ -149,6 +169,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 300);
         });
     }
+
+    // Trending Search Tag Clicks
+    trendingTagBtns.forEach(tag => {
+        tag.addEventListener('click', () => {
+            const query = tag.dataset.tag;
+            if (heroSearchInput) heroSearchInput.value = query;
+            searchQuery = query;
+            loadPhotos();
+        });
+    });
 
     // Lightbox Modal Logic
     const modal = document.getElementById('lightboxModal');

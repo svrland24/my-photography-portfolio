@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aperture Vision | Photography Portfolio & Showcase</title>
-    <meta name="description" content="A premium photography portfolio showcase featuring nature, portraits, landscapes, and street photography connected to Supabase Cloud Database.">
-    <!-- FontAwesome Icons -->
+    <title>Aperture Vision | Free Stock Photos & Visual Art</title>
+    <meta name="description" content="Explore thousands of free high-resolution stock photos and visual artwork captured by talented photographers. Connected to Supabase Cloud.">
+    <!-- FontAwesome 6 Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Main Custom CSS -->
+    <!-- Pexels Inspired Custom CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -21,9 +21,9 @@
             </a>
             
             <ul class="nav-links">
-                <li><a href="#gallery" class="active">Gallery</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#gallery" class="active">Explore</a></li>
+                <li><a href="#about">About Creator</a></li>
+                <li><a href="#contact">Contact & Inquiries</a></li>
             </ul>
 
             <div class="nav-actions">
@@ -31,48 +31,50 @@
                     <i class="fa-solid fa-moon"></i>
                 </button>
                 <button id="openAdminBtn" class="btn-admin">
-                    <i class="fa-solid fa-lock"></i> Admin Panel
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Upload / Admin
                 </button>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-banner">
-            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop" alt="Featured Photograph" class="hero-bg" id="heroBgImg">
-            <div class="hero-content">
-                <span class="hero-badge"><i class="fa-solid fa-star"></i> Featured Photograph</span>
-                <h1 class="hero-title" id="heroTitle">Golden Hour Mountain Peak</h1>
-                <p class="hero-desc" id="heroDesc">A breathtaking view of sunrise over misty mountain ridges.</p>
-                
-                <div class="hero-meta" id="heroMeta">
-                    <span class="meta-item"><i class="fa-solid fa-camera"></i> Sony A7 IV</span>
-                    <span class="meta-item"><i class="fa-solid fa-circle-dot"></i> FE 16-35mm f/2.8 GM</span>
-                    <span class="meta-item"><i class="fa-solid fa-sliders"></i> ISO 100</span>
-                    <span class="meta-item"><i class="fa-solid fa-clock"></i> 1/500s</span>
-                    <span class="meta-item"><i class="fa-solid fa-location-dot"></i> Bandarban, Bangladesh</span>
-                </div>
+    <!-- Pexels Immersive Hero Section -->
+    <section class="hero-pexels">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1600&auto=format&fit=crop" alt="Pexels Background" class="hero-pexels-bg">
+        <div class="hero-pexels-overlay"></div>
+        
+        <div class="hero-pexels-content">
+            <h1 class="hero-pexels-title">The best free stock photos, royalty free images & visual art</h1>
+            <p class="hero-pexels-subtitle">Captured with passion by lens explorers across Bangladesh and beyond.</p>
+
+            <!-- Floating Search Bar -->
+            <div class="hero-search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="heroSearchInput" placeholder="Search for free high-resolution photos, camera gear, location...">
+            </div>
+
+            <!-- Trending Tags -->
+            <div class="trending-tags">
+                <span style="font-weight: 700; color: #9ca3af;">Trending:</span>
+                <button class="trending-tag-btn" data-tag="nature">Nature</button>
+                <button class="trending-tag-btn" data-tag="portrait">Portrait</button>
+                <button class="trending-tag-btn" data-tag="street">Street</button>
+                <button class="trending-tag-btn" data-tag="landscape">Landscape</button>
+                <button class="trending-tag-btn" data-tag="architecture">Architecture</button>
+                <button class="trending-tag-btn" data-tag="wildlife">Wildlife</button>
             </div>
         </div>
     </section>
 
-    <!-- Gallery Controls (Search & Category Pills) -->
-    <div class="gallery-controls" id="gallery">
-        <div class="controls-row">
-            <div class="category-pills" id="categoryPills">
-                <!-- Rendered dynamically by JavaScript -->
-            </div>
-            <div class="search-box">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="Search photos by title, gear, location...">
-            </div>
+    <!-- Category Pills Filter Bar -->
+    <div class="category-bar-wrapper" id="gallery">
+        <div class="category-pills" id="categoryPills">
+            <!-- Rendered dynamically by JavaScript -->
         </div>
     </div>
 
-    <!-- Photo Gallery Grid -->
+    <!-- Pexels Iconic Masonry Photo Grid -->
     <section class="gallery-section">
-        <div class="photo-grid" id="photoGrid">
+        <div class="photo-masonry-grid" id="photoGrid">
             <!-- Rendered dynamically by JavaScript -->
         </div>
     </section>
@@ -87,8 +89,8 @@
             </div>
             
             <div class="lightbox-details">
-                <span class="category-tag" id="modalCategory" style="align-self: flex-start; margin-bottom: 0.8rem;">Category</span>
-                <h2 id="modalTitle" style="font-family: var(--font-heading); font-size: 2rem; margin-bottom: 0.5rem;">Photo Title</h2>
+                <span class="category-tag" id="modalCategory" style="align-self: flex-start; margin-bottom: 0.8rem; background: var(--accent-gradient); color: #fff; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">Category</span>
+                <h2 id="modalTitle" style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">Photo Title</h2>
                 <p id="modalDesc" style="color: var(--text-muted); font-size: 0.95rem;">Description goes here...</p>
 
                 <div class="exif-grid">
@@ -137,8 +139,8 @@
                 </div>
 
                 <div style="margin-top: auto; padding-top: 1rem; display: flex; gap: 1rem;">
-                    <a id="downloadBtn" href="#" target="_blank" download class="btn-admin" style="justify-content: center; width: 100%;">
-                        <i class="fa-solid fa-download"></i> Open / Download Full Resolution
+                    <a id="downloadBtn" href="#" target="_blank" download class="btn-admin" style="justify-content: center; width: 100%; font-size: 1rem; padding: 0.85rem;">
+                        <i class="fa-solid fa-download"></i> Free Download (Full High-Res)
                     </a>
                 </div>
             </div>
@@ -153,8 +155,8 @@
             <!-- Admin Passcode Screen -->
             <div id="adminLoginScreen" style="padding: 4rem 2rem; text-align: center; max-width: 420px; margin: 0 auto; width: 100%;">
                 <i class="fa-solid fa-shield-halved fa-3x" style="color: var(--accent-glow); margin-bottom: 1rem;"></i>
-                <h2 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 0.5rem;">Admin Access</h2>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Enter your passcode to manage photographs and categories.</p>
+                <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem;">Creator Upload Portal</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Enter your admin passcode to upload new photos or manage categories.</p>
 
                 <div id="loginError" style="display: none; padding: 0.6rem; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; border-radius: 8px; color: #f87171; font-size: 0.85rem; margin-bottom: 1rem;"></div>
 
@@ -163,7 +165,7 @@
                 </div>
 
                 <button id="adminLoginBtn" class="btn-submit" style="width: 100%; margin-top: 0.5rem;">
-                    <i class="fa-solid fa-key"></i> Verify & Unlock
+                    <i class="fa-solid fa-key"></i> Verify & Unlock Portal
                 </button>
             </div>
 
@@ -174,7 +176,7 @@
                 <div style="padding: 1.2rem 2rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
                     <div style="display: flex; align-items: center; gap: 0.75rem;">
                         <i class="fa-solid fa-camera-retro" style="font-size: 1.4rem; color: var(--accent-glow);"></i>
-                        <h3 style="font-size: 1.2rem; font-weight: 700;">Admin Management Portal</h3>
+                        <h3 style="font-size: 1.2rem; font-weight: 800;">Creator Admin Portal</h3>
                     </div>
 
                     <!-- Navigation Tabs -->
@@ -186,18 +188,18 @@
                 </div>
 
                 <!-- Admin Stats Row -->
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; padding: 1.2rem 2rem; background: rgba(0,0,0,0.2); border-bottom: 1px solid var(--border-color);">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; padding: 1.2rem 2rem; background: rgba(0,0,0,0.25); border-bottom: 1px solid var(--border-color);">
                     <div>
                         <span style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Total Photos</span>
-                        <h3 id="statTotalPhotos" style="font-size: 1.4rem; font-weight: 700; color: var(--accent-glow);">0</h3>
+                        <h3 id="statTotalPhotos" style="font-size: 1.4rem; font-weight: 800; color: var(--accent-glow);">0</h3>
                     </div>
                     <div>
                         <span style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Categories</span>
-                        <h3 id="statTotalCategories" style="font-size: 1.4rem; font-weight: 700; color: var(--accent-secondary);">0</h3>
+                        <h3 id="statTotalCategories" style="font-size: 1.4rem; font-weight: 800; color: var(--accent-secondary);">0</h3>
                     </div>
                     <div>
                         <span style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Total Views</span>
-                        <h3 id="statTotalViews" style="font-size: 1.4rem; font-weight: 700; color: #10b981;">0</h3>
+                        <h3 id="statTotalViews" style="font-size: 1.4rem; font-weight: 800; color: #10b981;">0</h3>
                     </div>
                 </div>
 
@@ -207,7 +209,7 @@
                     <!-- Upload Tab -->
                     <div id="tabUpload" class="admin-tab-content">
                         <div id="uploadAlert" style="display: none; padding: 0.8rem 1.2rem; background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; border-radius: 8px; color: #34d399; margin-bottom: 1.5rem;">
-                            <i class="fa-solid fa-circle-check"></i> Photograph uploaded successfully to Supabase Database!
+                            <i class="fa-solid fa-circle-check"></i> Photograph uploaded successfully to Supabase Cloud Database!
                         </div>
 
                         <form id="photoUploadForm">
@@ -300,12 +302,14 @@
         </div>
     </div>
 
-    <!-- About Section -->
+    <!-- About Creator Section -->
     <section class="about-section" id="about">
         <div class="about-card">
             <img src="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?q=80&w=800" alt="Photographer at Work" class="about-img">
             <div class="about-text">
-                <span class="hero-badge"><i class="fa-solid fa-user"></i> About The Photographer</span>
+                <span class="pill-btn" style="display: inline-flex; width: fit-content; background: rgba(5, 160, 129, 0.15); color: var(--accent-glow); border-color: var(--accent-glow); margin-bottom: 1rem;">
+                    <i class="fa-solid fa-user"></i> About Creator
+                </span>
                 <h2>Visual Storyteller & Lens Explorer</h2>
                 <p style="color: var(--text-muted); margin-bottom: 1rem;">Passionately capturing raw emotions, majestic landscapes, and vibrant city streetscapes. Every photo in this collection tells a story carved by lighting, geometry, and moment.</p>
                 <p style="color: var(--text-muted);">Equipped with professional mirrorless systems and prime lenses to craft high-resolution visual art for exhibitions, editorial features, and private collections.</p>
@@ -321,19 +325,21 @@
                     </div>
                     <div>
                         <div class="stat-number">100%</div>
-                        <div class="stat-label">Original Art</div>
+                        <div class="stat-label">Free Stock Art</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact & Inquiries Section -->
     <section class="about-section" id="contact" style="margin-top: 0;">
         <div class="about-card" style="grid-template-columns: 1fr;">
             <div style="max-width: 700px; margin: 0 auto; text-align: center; width: 100%;">
-                <span class="hero-badge"><i class="fa-solid fa-envelope"></i> Get In Touch</span>
-                <h2 style="font-family: var(--font-heading); font-size: 2.2rem; margin-bottom: 0.8rem;">Have a Project or Inquiry?</h2>
+                <span class="pill-btn" style="display: inline-flex; width: fit-content; background: rgba(99, 102, 241, 0.15); color: var(--accent-secondary); border-color: var(--accent-secondary); margin-bottom: 1rem;">
+                    <i class="fa-solid fa-envelope"></i> Get In Touch
+                </span>
+                <h2 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 0.8rem;">Have a Project or Assignment Inquiry?</h2>
                 <p style="color: var(--text-muted); margin-bottom: 2rem;">Feel free to reach out for photo print inquiries, booking assignments, or creative collaborations.</p>
 
                 <form onsubmit="event.preventDefault(); alert('Thank you! Your message has been sent.'); this.reset();" style="display: flex; flex-direction: column; gap: 1rem; text-align: left;">
@@ -349,7 +355,7 @@
                     </div>
                     <div class="form-group" style="margin: 0;">
                         <label>Subject</label>
-                        <input type="text" class="form-control" placeholder="Photo Print / Assignment Booking">
+                        <input type="text" class="form-control" placeholder="Photo Assignment / Print Booking">
                     </div>
                     <div class="form-group" style="margin: 0;">
                         <label>Message</label>
@@ -364,7 +370,7 @@
     <!-- Footer -->
     <footer>
         <div class="nav-container" style="flex-direction: column; gap: 1rem;">
-            <p>&copy; 2026 ApertureVision Photography. All rights reserved.</p>
+            <p>&copy; 2026 ApertureVision Photography. Inspired by Pexels aesthetics.</p>
             <p style="font-size: 0.8rem; color: var(--text-muted);">Crafted for photographers & connected to Supabase Cloud Database.</p>
         </div>
     </footer>
