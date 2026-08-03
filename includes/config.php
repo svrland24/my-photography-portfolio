@@ -39,6 +39,7 @@ try {
         $pdo = new PDO($dsn, $supabase_user, $supabase_password, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_TIMEOUT => 5
         ]);
     } else {
         // Local XAMPP MySQL Connection
@@ -54,6 +55,10 @@ try {
     $pdo = null;
 }
 
-define('SITE_URL', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\'));
+// Clean SITE_URL definition for Vercel & Localhost without /api/ path contamination
+$scheme = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ? "https" : "http";
+$host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+define('SITE_URL', $scheme . '://' . $host);
+
 define('UPLOAD_DIR', __DIR__ . '/../uploads/');
 define('UPLOAD_URL', 'uploads/');
