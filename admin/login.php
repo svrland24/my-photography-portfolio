@@ -13,9 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = trim($_POST['password'] ?? '');
 
     if (!empty($username) && !empty($password)) {
-        if (isset($db_error)) {
-            $error = 'Database connection error. Make sure MySQL is running in XAMPP.';
-        } else {
+        if (isset($db_error) && !empty($db_error)) {
+            $error = 'Database connection error: ' . $db_error;
+        } else if (isset($pdo) && $pdo !== null) {
             try {
                 $stmt = $pdo->prepare("SELECT * FROM admins WHERE username = :username LIMIT 1");
                 $stmt->execute([':username' => $username]);
@@ -39,6 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } catch (PDOException $e) {
                 $error = 'Login error: ' . $e->getMessage();
             }
+        } else {
+            $error = 'Database connection not established.';
         }
     } else {
         $error = 'Please fill in all fields.';
@@ -52,14 +54,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login | Photography Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background: var(--bg-dark);">
 
     <div style="width: 100%; max-width: 440px; padding: 2.5rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); box-shadow: 0 20px 50px rgba(0,0,0,0.5); backdrop-filter: blur(16px);">
         
         <div style="text-align: center; margin-bottom: 2rem;">
-            <a href="../index.php" class="brand-logo" style="justify-content: center; font-size: 1.8rem; margin-bottom: 0.5rem;">
+            <a href="/index.php" class="brand-logo" style="justify-content: center; font-size: 1.8rem; margin-bottom: 0.5rem;">
                 <i class="fa-solid fa-camera-retro"></i>
                 <div class="brand-text">Aperture<span>Admin</span></div>
             </a>
@@ -91,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div style="margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--border-color); text-align: center; font-size: 0.82rem; color: var(--text-muted);">
             <p><i class="fa-solid fa-circle-info"></i> Default Username: <code>admin</code></p>
             <p>Default Password: <code>admin123</code></p>
-            <p style="margin-top: 0.8rem;"><a href="../index.php" style="color: var(--accent-glow); text-decoration: underline;">&larr; Back to Public Portfolio</a></p>
+            <p style="margin-top: 0.8rem;"><a href="/index.php" style="color: var(--accent-glow); text-decoration: underline;">&larr; Back to Public Portfolio</a></p>
         </div>
 
     </div>

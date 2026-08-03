@@ -8,7 +8,7 @@ require_once __DIR__ . '/includes/config.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Database Connection Test | Aperture Vision</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background: var(--bg-dark);">
 
@@ -20,7 +20,7 @@ require_once __DIR__ . '/includes/config.php';
             <p style="color: var(--text-muted); font-size: 0.9rem;">Mode: <strong style="color: var(--accent-glow);"><?php echo strtoupper($db_mode); ?></strong></p>
         </div>
 
-        <?php if (!isset($db_error) && isset($pdo)): ?>
+        <?php if (!isset($db_error) && isset($pdo) && $pdo !== null): ?>
             <div style="padding: 1.2rem; background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; border-radius: 12px; color: #34d399; margin-bottom: 1.5rem; text-align: center;">
                 <i class="fa-solid fa-circle-check fa-2x"></i>
                 <h3 style="margin-top: 0.5rem;">Connection Successful!</h3>
@@ -32,7 +32,7 @@ require_once __DIR__ . '/includes/config.php';
                 <p><strong>Database:</strong> <code><?php echo htmlspecialchars($db_mode === 'supabase' ? $supabase_db : $mysql_name); ?></code></p>
             </div>
 
-            <a href="index.php" class="btn-admin" style="width: 100%; justify-content: center; margin-top: 1.5rem;">
+            <a href="/index.php" class="btn-admin" style="width: 100%; justify-content: center; margin-top: 1.5rem;">
                 <i class="fa-solid fa-globe"></i> Open Photography Portfolio Website &rarr;
             </a>
 
@@ -55,7 +55,7 @@ require_once __DIR__ . '/includes/config.php';
         <?php endif; ?>
 
         <div style="margin-top: 1.5rem; text-align: center;">
-            <a href="test_db.php" style="font-size: 0.85rem; color: var(--text-muted); text-decoration: underline;">
+            <a href="/test_db.php" style="font-size: 0.85rem; color: var(--text-muted); text-decoration: underline;">
                 <i class="fa-solid fa-rotate-right"></i> Re-test Connection
             </a>
         </div>
